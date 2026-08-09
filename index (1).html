@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arther Witson — Web Developer</title>
+<meta name="description" content="Arther Witson — Freelance Web Developer. HTML, CSS, JavaScript, Python.">
+
+<!-- Fonts: JetBrains Mono (code/display) + Inter (body text) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. DESIGN TOKENS — edit colors/fonts here and they apply everywhere
+   ============================================================ */
+:root{
+  --bg:            #0b0f19;   /* page background */
+  --bg-elev:       #121826;   /* card / panel background */
+  --bg-elev-2:     #1a2233;   /* hover / lighter panel */
+  --border:        #232b3d;
+  --text:          #cdd6e3;   /* body text */
+  --text-dim:      #7c8798;   /* secondary text */
+  --text-bright:   #f2f5fa;   /* headings */
+
+  --accent-fn:     #7cc4ff;   /* "function blue" — links, headings accent */
+  --accent-str:    #8fe3a8;   /* "string green" — success, tags */
+  --accent-kw:     #ff8a7a;   /* "keyword coral" — highlights, CTA */
+  --accent-gold:   #f5c86a;   /* comments / labels */
+
+  --radius:        10px;
+  --mono:          'JetBrains Mono', monospace;
+  --sans:          'Inter', -apple-system, sans-serif;
+  --max-w:         960px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  line-height:1.6;
+  font-size:16px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+}
+
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+ul{ list-style:none; }
+
+.wrap{ max-width:var(--max-w); margin:0 auto; padding:0 24px; }
+
+/* Comment-style section labels, e.g. // 02 About */
+.eyebrow{
+  font-family:var(--mono);
+  color:var(--accent-gold);
+  font-size:0.85rem;
+  letter-spacing:0.02em;
+  margin-bottom:10px;
+  display:block;
+}
+
+h1,h2,h3{
+  font-family:var(--mono);
+  color:var(--text-bright);
+  font-weight:700;
+  line-height:1.2;
+}
+
+section{ padding:90px 0; border-bottom:1px solid var(--border); }
+section:last-of-type{ border-bottom:none; }
+
+/* Focus visibility for accessibility */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline:2px solid var(--accent-fn);
+  outline-offset:3px;
+}
+
+/* ============================================================
+   2. NAV — window-chrome style bar
+   ============================================================ */
+header{
+  position:sticky; top:0; z-index:50;
+  background:rgba(11,15,25,0.85);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 24px; max-width:var(--max-w); margin:0 auto;
+}
+.nav-brand{
+  font-family:var(--mono); font-weight:700; color:var(--text-bright);
+  font-size:1rem; display:flex; align-items:center; gap:10px;
+}
+.dots{ display:flex; gap:6px; }
+.dots span{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.dots span:nth-child(1){ background:#ff5f56; }
+.dots span:nth-child(2){ background:#ffbd2e; }
+.dots span:nth-child(3){ background:#27c93f; }
+
+.nav-links{ display:flex; gap:28px; font-family:var(--mono); font-size:0.9rem; }
+.nav-links a{ color:var(--text-dim); transition:color .2s ease; }
+.nav-links a:hover{ color:var(--accent-fn); }
+
+.nav-toggle{ display:none; background:none; border:1px solid var(--border); color:var(--text); border-radius:6px; padding:6px 10px; font-family:var(--mono); }
+
+@media (max-width:700px){
+  .nav-links{
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--bg-elev); border-bottom:1px solid var(--border);
+    flex-direction:column; padding:16px 24px; gap:16px;
+    display:none;
+  }
+  .nav-links.open{ display:flex; }
+  .nav-toggle{ display:inline-block; }
+}
+
+/* ============================================================
+   3. HERO — terminal window
+   ============================================================ */
+.hero{ padding:80px 0 60px; }
+.terminal{
+  background:var(--bg-elev);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,0.35);
+}
+.terminal-bar{
+  display:flex; align-items:center; gap:10px;
+  padding:12px 16px;
+  background:var(--bg-elev-2);
+  border-bottom:1px solid var(--border);
+}
+.terminal-title{
+  font-family:var(--mono); font-size:0.8rem; color:var(--text-dim);
+  margin-left:6px;
+}
+.terminal-body{
+  padding:28px 24px 34px;
+  font-family:var(--mono);
+  font-size:1.05rem;
+}
+.terminal-line{ color:var(--text-dim); margin-bottom:6px; }
+.terminal-line .prompt{ color:var(--accent-str); margin-right:8px; }
+.terminal-line .cmd{ color:var(--text-bright); }
+
+.hero-name{
+  font-size:clamp(2rem, 5vw, 3.2rem);
+  color:var(--text-bright);
+  margin:18px 0 6px;
+}
+.hero-role{
+  color:var(--accent-fn);
+  font-family:var(--mono);
+  font-size:1.1rem;
+  margin-bottom:18px;
+}
+.hero-bio{
+  color:var(--text);
+  max-width:56ch;
+  font-size:1.02rem;
+}
+.cursor{
+  display:inline-block; width:9px; height:1.1em; background:var(--accent-kw);
+  margin-left:4px; vertical-align:text-bottom;
+  animation:blink 1s steps(1) infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+.hero-cta{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
+.btn{
+  font-family:var(--mono); font-size:0.9rem; font-weight:600;
+  padding:12px 22px; border-radius:8px; border:1px solid var(--border);
+  transition:all .2s ease; display:inline-flex; align-items:center; gap:8px;
+}
+.btn-primary{ background:var(--accent-fn); color:#0b0f19; border-color:var(--accent-fn); }
+.btn-primary:hover{ background:#9ed2ff; }
+.btn-ghost{ color:var(--text); }
+.btn-ghost:hover{ border-color:var(--accent-fn); color:var(--accent-fn); }
+
+/* ============================================================
+   4. ABOUT
+   ============================================================ */
+.about-grid{
+  display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:start;
+}
+@media (max-width:700px){ .about-grid{ grid-template-columns:1fr; } }
+
+.about-photo{
+  width:100%; aspect-ratio:1/1; border-radius:var(--radius);
+  background:var(--bg-elev); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); color:var(--text-dim); font-size:0.85rem;
+  overflow:hidden; text-align:center; padding:20px;
+}
+.about-photo img{ width:100%; height:100%; object-fit:cover; }
+
+.about-text p{ margin-bottom:16px; color:var(--text); }
+.about-text p:last-child{ margin-bottom:0; }
+
+.meta-list{ margin-top:22px; font-family:var(--mono); font-size:0.9rem; }
+.meta-list li{ display:flex; gap:10px; margin-bottom:8px; color:var(--text-dim); }
+.meta-list li span.key{ color:var(--accent-gold); min-width:90px; }
+
+/* ============================================================
+   5. SKILLS — inline code-chip badges
+   ============================================================ */
+.skills-grid{ display:flex; flex-wrap:wrap; gap:12px; margin-top:20px; }
+.skill-chip{
+  font-family:var(--mono); font-size:0.92rem;
+  background:var(--bg-elev); border:1px solid var(--border);
+  padding:10px 16px; border-radius:8px; color:var(--text);
+  display:flex; align-items:center; gap:8px;
+  transition:transform .15s ease, border-color .15s ease;
+}
+.skill-chip:hover{ border-color:var(--accent-str); transform:translateY(-2px); }
+.skill-chip .tag{ color:var(--accent-str); }
+
+/* ============================================================
+   6. PROJECTS — file-listing style cards
+   ============================================================ */
+.projects-list{ margin-top:30px; display:flex; flex-direction:column; gap:18px; }
+.project-card{
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius);
+  padding:26px 28px; transition:border-color .2s ease, transform .2s ease;
+}
+.project-card:hover{ border-color:var(--accent-fn); transform:translateY(-3px); }
+
+.project-head{
+  display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;
+}
+.project-name{
+  font-family:var(--mono); font-size:1.15rem; color:var(--text-bright);
+  display:flex; align-items:center; gap:8px;
+}
+.project-name::before{ content:"📁"; font-size:0.95em; }
+.project-links{ display:flex; gap:16px; font-family:var(--mono); font-size:0.85rem; }
+.project-links a{ color:var(--accent-fn); }
+.project-links a:hover{ text-decoration:underline; }
+
+.project-desc{ margin:12px 0 14px; color:var(--text); max-width:70ch; }
+.project-stack{ display:flex; flex-wrap:wrap; gap:8px; }
+.project-stack span{
+  font-family:var(--mono); font-size:0.78rem; color:var(--accent-gold);
+  background:rgba(245,200,106,0.08); padding:4px 10px; border-radius:6px;
+}
+
+.project-placeholder-note{
+  font-family:var(--mono); font-size:0.78rem; color:var(--text-dim);
+  margin-top:10px; font-style:italic;
+}
+
+/* ============================================================
+   7. CONTACT — terminal prompt style
+   ============================================================ */
+.contact-box{
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius);
+  padding:34px 30px; margin-top:24px;
+}
+.contact-row{
+  display:flex; align-items:center; gap:14px; font-family:var(--mono);
+  padding:10px 0; border-bottom:1px dashed var(--border);
+}
+.contact-row:last-child{ border-bottom:none; }
+.contact-row .prompt{ color:var(--accent-str); }
+.contact-row a{ color:var(--accent-fn); word-break:break-all; }
+.contact-row a:hover{ text-decoration:underline; }
+
+footer{
+  text-align:center; padding:36px 24px; font-family:var(--mono);
+  color:var(--text-dim); font-size:0.85rem;
+}
+footer .accent{ color:var(--accent-kw); }
+
+/* Section heading row shared style */
+.section-head{ margin-bottom:8px; }
+.section-head h2{ font-size:1.6rem; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<header>
+  <nav class="nav">
+    <div class="nav-brand">
+      <span class="dots"><span></span><span></span><span></span></span>
+      arther.dev
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ============================================================
+     HERO — EDIT: name, role, bio text below
+     ============================================================ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dots"><span></span><span></span><span></span></span>
+        <span class="terminal-title">arther@portfolio: ~</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="prompt">$</span><span class="cmd">whoami</span></div>
+
+        <h1 class="hero-name">Arther Witson</h1>
+        <div class="hero-role">// Web Developer — Freelance</div>
+
+        <!-- EDIT: your bio -->
+        <p class="hero-bio">
+          I build clean, functional websites from scratch — front to back.
+          Based in India, working with clients worldwide as an independent freelancer.
+          <span class="cursor"></span>
+        </p>
+
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">View Projects →</a>
+          <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT — EDIT: photo, about text, meta info
+     ============================================================ -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">// 01 — About</span>
+      <h2>A little about me</h2>
+    </div>
+
+    <div class="about-grid" style="margin-top:32px;">
+      <div class="about-text">
+        <!-- EDIT: expand this with more about yourself, your journey, what you enjoy building -->
+        <p>
+          I'm Arther, a freelance web developer working across the full stack —
+          HTML, CSS and JavaScript for the front end, Python when logic and
+          automation come into play. I like taking a project from a blank
+          page to something people can actually use.
+        </p>
+        <p>
+          I've always worked freelance, picking up projects that let me learn
+          something new each time — from small business sites to custom tools.
+        </p>
+
+        <ul class="meta-list">
+          <li><span class="key">Location</span> India</li>
+          <li><span class="key">Status</span> Freelance / Open to work</li>
+          <li><span class="key">Email</span> Arther.106.2@gmail.com</li>
+        </ul>
+      </div>
+
+      <!-- EDIT: replace this box with <img src="your-photo.jpg" alt="Arther Witson"> -->
+      <div class="about-photo">
+        Add your photo here<br>&mdash; replace this box in the HTML<br>with an &lt;img&gt; tag
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SKILLS — EDIT: add/remove skill chips as needed
+     ============================================================ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">// 02 — Skills</span>
+      <h2>Tools I work with</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-chip"><span class="tag">&lt;/&gt;</span> HTML</div>
+      <div class="skill-chip"><span class="tag">&lt;/&gt;</span> CSS</div>
+      <div class="skill-chip"><span class="tag">fn</span> JavaScript</div>
+      <div class="skill-chip"><span class="tag">py</span> Python</div>
+
+      <!-- EDIT: copy the line below to add more skills -->
+      <!-- <div class="skill-chip"><span class="tag">tag</span> Skill Name</div> -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS — EDIT: this is a placeholder project.
+     Duplicate the .project-card block for each real project,
+     and fill in name / description / stack / links.
+     ============================================================ -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">// 03 — Projects</span>
+      <h2>Things I've built</h2>
+    </div>
+
+    <div class="projects-list">
+
+      <!-- PROJECT CARD 1 — replace with your real project -->
+      <div class="project-card">
+        <div class="project-head">
+          <div class="project-name">project-one</div>
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener">Live ↗</a>
+            <a href="#" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Short description goes here — what the project does, who it's for,
+          and the problem it solves. Keep it to 1-2 sentences.
+        </p>
+        <div class="project-stack">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span>
+        </div>
+        <p class="project-placeholder-note">↑ Placeholder — replace with your project details and update the links above.</p>
+      </div>
+
+      <!-- PROJECT CARD 2 — duplicate this block for each additional project -->
+      <div class="project-card">
+        <div class="project-head">
+          <div class="project-name">project-two</div>
+          <div class="project-links">
+            <a href="#" target="_blank" rel="noopener">Live ↗</a>
+            <a href="#" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Another short project description. Swap this out once you've built
+          and hosted your project somewhere like GitHub Pages, Netlify, or Vercel.
+        </p>
+        <div class="project-stack">
+          <span>Python</span><span>Automation</span>
+        </div>
+        <p class="project-placeholder-note">↑ Placeholder — replace with your project details and update the links above.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT — EDIT: your email / links are already filled in below
+     ============================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">// 04 — Contact</span>
+      <h2>Let's work together</h2>
+    </div>
+
+    <div class="contact-box">
+      <div class="contact-row">
+        <span class="prompt">$</span> email &rarr;
+        <a href="mailto:Arther.106.2@gmail.com">Arther.106.2@gmail.com</a>
+      </div>
+      <div class="contact-row">
+        <span class="prompt">$</span> github &rarr;
+        <a href="#" target="_blank" rel="noopener">add-your-github-link</a>
+      </div>
+      <div class="contact-row">
+        <span class="prompt">$</span> linkedin &rarr;
+        <a href="#" target="_blank" rel="noopener">add-your-linkedin-link</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Built by Arther Witson <span class="accent">//</span> <span id="year"></span></div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
